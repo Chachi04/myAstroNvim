@@ -15,7 +15,7 @@ return {
                     accept_line = false,
                     next = "<C-.>",
                     prev = "<C-,>",
-                    dismiss = "<C/>",
+                    dismiss = "<C-]>",
                 },
             },
         },
@@ -31,6 +31,10 @@ return {
         end,
     },
     { import = "astrocommunity.colorscheme.catppuccin" },
+    -- { import = "astrocommunity.editing-support.telescope-undo-nvim" },
+    { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
+    { import = "astrocommunity.editing-support.neogen" },
+    -- { import = "astrocommunity.editing-support.ultimate-autopair-nvim" },
     { import = "astrocommunity.pack.java" },
     { import = "astrocommunity.pack.python" },
     { import = "astrocommunity.pack.rust" },
@@ -41,30 +45,40 @@ return {
     { import = "astrocommunity.motion.nvim-surround" },
     { import = "astrocommunity.syntax.hlargs-nvim" },
     { import = "astrocommunity.markdown-and-latex.vimtex" },
-    -- {
-    --     "lervag/vimtex",
-    --     config = function()
-    --         vim.g.tex_compile = false
-    --         local toggle_latex_compile = function()
-    --             vim.g.tex_compile = not vim.g.tex_compile
-    --             if vim.g.tex_compile then
-    --                 vim.cmd ":VimtexCompile"
-    --             else
-    --                 vim.cmd ":VimtexStopAll"
-    --                 vim.cmd ":VimtexClean"
-    --             end
-    --         end
-    --
-    --         -- vim.keymap.set("n", "<f3>", toggle_latex_compile, { noremap = true, silent = true })
-    --         vim.api.nvim_create_augroup("Latex", { clear = true })
-    --         vim.api.nvim_create_autocmd("BufEnter", {
-    --             desc = "Compile latex on save",
-    --             pattern = "*.tex",
-    --             group = "Latex",
-    --             callback = function()
-    --                 vim.keymap.set("n", "<f3>", toggle_latex_compile, { noremap = true, silent = true })
-    --             end,
-    --         })
-    --     end,
-    -- },
+    {
+        "lervag/vimtex",
+        config = function()
+            vim.g.tex_compile = false
+            local toggle_latex_compile = function()
+                vim.g.tex_compile = not vim.g.tex_compile
+                if vim.g.tex_compile then
+                    vim.cmd ":VimtexCompile"
+                else
+                    vim.cmd ":VimtexStopAll"
+                    vim.cmd ":VimtexClean"
+                end
+            end
+
+            vim.g.vimtex_view_general_viewer = "evince"
+
+            -- vim.keymap.set("n", "<f3>", toggle_latex_compile, { noremap = true, silent = true })
+            vim.api.nvim_create_augroup("Latex", { clear = true })
+            vim.api.nvim_create_autocmd("BufEnter", {
+                desc = "Compile latex on save",
+                pattern = "*.tex",
+                group = "Latex",
+                callback = function()
+                    vim.keymap.set("n", "<f3>", toggle_latex_compile, { noremap = true, silent = true, buffer = true })
+                end,
+            })
+
+            vim.api.nvim_create_augroup("VimTex", { clear = true })
+            vim.api.nvim_create_autocmd("BufReadPre", {
+                desc = "Set vimtex main file",
+                pattern = "*.tex",
+                group = "VimTex",
+                callback = function() vim.g.vimtex_main = vim.fn.expand "%:p" end,
+            })
+        end,
+    },
 }

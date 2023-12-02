@@ -10,8 +10,8 @@ if vim.fn.executable "mycli" == 1 then
     maps.n["<leader>ts"] = { function() utils.toggle_term_cmd "mycli" end, desc = "ToggleTerm mycli" }
 end
 
-maps.i["<c-c>"] = { "<esc>" }
-maps.n["<c-c>"] = { "<esc>" }
+maps.i["<C-c>"] = { "<Esc>" }
+maps.n["<C-c>"] = { "<Esc>" }
 maps.n["J"] = { "mzJ`z" }
 -- maps.n["<C-d>"] = { "<C-d>zz" }
 -- maps.n["<C-u>"] = { "<C-u>zz" }
@@ -19,11 +19,11 @@ maps.n["J"] = { "mzJ`z" }
 -- maps.n["N"] = { "Nzzzv" }
 
 -- Better undo breaks
-maps.i["<space>"] = { "<space><c-g>u" }
-maps.i[","] = { ",<c-g>u" }
-maps.i["."] = { ".<c-g>u" }
-maps.i["!"] = { "!<c-g>u" }
-maps.i["?"] = { "?<c-g>u" }
+maps.i["<Space>"] = { "<Space><C-g>u" }
+maps.i[","] = { ",<C-g>u" }
+maps.i["."] = { ".<C-g>u" }
+maps.i["!"] = { "!<C-g>u" }
+maps.i["?"] = { "?<C-g>u" }
 
 -- maps.n["<leader>pv"] = { vim.cmd.Ex, desc = "Open Netrw" }
 maps.n["<leader>c"] = {
@@ -43,6 +43,12 @@ maps.i["<A-k>"] = { "<Esc><cmd>m .-2<CR>==gi" }
 maps.v["<A-j>"] = { ":m '>+1<CR>gv=gv" }
 maps.v["<A-k>"] = { ":m '<-2<CR>gv=gv" }
 
+-- Moving in insert mode
+maps.i["<C-h>"] = { "<Left>" }
+maps.i["<C-l>"] = { "<Right>" }
+maps.i["<C-j>"] = { "<Down>" }
+maps.i["<C-k>"] = { "<Up>" }
+
 -- Telescope
 maps.n["<C-p>"] = { function() require("telescope.builtin").find_files() end, desc = "Telescope find_files" }
 maps.n["<leader><leader>"] = { function() require("telescope.builtin").git_files() end, desc = "Telescope git_files" }
@@ -52,17 +58,21 @@ maps.n["<leader>u"] = { "<cmd>UndotreeToggle<CR>", desc = "Toggle Undo tree" }
 maps.n["<C-n>"] = { "<cmd>Neotree toggle<CR>", desc = "Toggle File Explorer" }
 
 -- Comments
-maps.n["<c-/>"] = {
+maps.n["<C-/>"] = {
     function() require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1) end,
     desc = "Comment line",
 }
-maps.v["<c-/>"] =
+maps.i["<C-/>"] = {
+    function() require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1) end,
+    desc = "Comment line",
+}
+maps.v["<C-/>"] =
     { "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", desc = "Toggle comment line" }
-maps.n["<c-_>"] = {
+maps.n["<C-_>"] = {
     function() require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1) end,
     desc = "Comment line",
 }
-maps.v["<c-_>"] =
+maps.v["<C-_>"] =
     { "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>", desc = "Toggle comment line" }
 
 -- Telescope

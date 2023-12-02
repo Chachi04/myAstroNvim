@@ -14,6 +14,7 @@ return {
         -- cindent = true, -- sets vim.opt.cindent
         wildignorecase = true, -- sets vim.opt.wildignorecase
         swapfile = false, -- sets vim.opt.swapfile
+        scrolloff = 10, -- sets vim.opt.scrolloff
     },
     g = {
         mapleader = " ", -- sets vim.g.mapleader
