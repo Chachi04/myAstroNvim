@@ -33,11 +33,11 @@ return {
                 extra_args = { "--style=file:/home/chachi/.config/nvim/lua/user/.clang-format" },
                 disabled_filetypes = { "cs" },
             }, -- C, C++, java
-            null_ls.builtins.formatting.csharpier, -- C#
+            -- null_ls.builtins.formatting.csharpier, -- C#
             null_ls.builtins.formatting.blade_formatter, -- Laravel Blade
             null_ls.builtins.formatting.rustfmt, -- Rust
 
-            -- null_ls.builtins.completion.luasnip, -- LuaSnip
+            null_ls.builtins.completion.luasnip, -- LuaSnip
         }
         return config -- return final config table
     end,
